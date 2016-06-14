@@ -142,8 +142,8 @@ public class GuiMain extends JFrame {
 		int height=Toolkit.getDefaultToolkit().getScreenSize().height;  //×ÀÃæ¸ß
 		
 		frame.setSize(width , height);
-//		frame.
 		frame.setVisible(true);
+		
 		
 		
 	}
