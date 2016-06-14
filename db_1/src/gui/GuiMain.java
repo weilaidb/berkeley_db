@@ -148,51 +148,7 @@ public class GuiMain extends JFrame {
 		
 	}
 	
-	
-	
-	void genGui()
-	{
-		// 方法3：通过分析匿名类名称()  
-		String clazzName3 = new Object() {  
-			public String getClassName() {  
-				String clazzName = this.getClass().getName();  
-				return clazzName.substring(0, clazzName.lastIndexOf('$'));  
-			}  
-		}.getClassName();  
-		System.out.println(clazzName3);  
 
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-
-		String title = "future db";
-		Frame f=new Frame(title);  
-		f.setSize(500,400);  
-		f.setLocation(300,200);  
-		f.setLayout(new FlowLayout());  
-
-		Button b=new Button("我是一个按钮");  
-		Button c=new Button("我是一个按钮");  
-
-		f.add(b);
-		f.add(c);	
-		
-		f.addWindowListener(new MyWin());  
-		
-		//load logo
-		loadlogo(f);
-
-		
-		f.setVisible(true);                  //设置可见		
-		
-		System.out.println("Hello world!");  
-
-		
-		
-		
-	}
-	
 
 	public class LabelListener implements ActionListener {
 
