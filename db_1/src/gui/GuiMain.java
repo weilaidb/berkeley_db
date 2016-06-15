@@ -21,6 +21,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -66,6 +67,10 @@ public class GuiMain extends JFrame {
 	JEditorPane left1edit;
 	JEditorPane left2edit;
 	JEditorPane rightedit;
+	JDialog about = null;
+	boolean ison = false;
+	
+	final String version = "v1.0";
 	
 	void loadlogo(Frame f)
 	{
@@ -212,7 +217,10 @@ public class GuiMain extends JFrame {
 		setupButton        = new JButton("设置");
 		toolButton         = new JButton("工具");
 		aboutButton        = new JButton("关于");
+		aboutButton.addActionListener(new aboutBtnClickListener());
 		closeButton        = new JButton("close");
+		closeButton.addActionListener(new CloseBtnClickedListener());
+		
         Box vbox1=Box.createVerticalBox();
         vbox1.add(InDbButton);
         vbox1.add(rightcleanButton);
@@ -324,6 +332,83 @@ public class GuiMain extends JFrame {
 
 	}
 
+	public class CloseBtnClickedListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			System.exit(0);
+		}
+
+	}
+	
+	public class aboutBtnClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+//			JButton jButton1=new JButton("OK");
+//			jButton1.addActionListener(this);
+//			JTextArea info = new JTextArea();
+			String verstr = "自动生成代码 \n "
+					+ "by 小魏莱 \n" 
+					+ version; 
+			
+			JLabel info;
+			
+
+//			info.setText(verstr);
+			
+			
+			
+			
+			//创建一个按钮对象,该对象被添加到对话框中
+			if(ison){
+				System.out.print("equals ok");
+				// 以下语句等价于jDialog1.setVisible(false);
+
+				/* public void dispose()
+
+				 * 释放由此 Window、其子组件及其拥有的所有子组件所使用的所有本机屏幕资源。
+
+				 * 即这些 Component 的资源将被破坏，它们使用的所有内存都将返回到操作系统，
+
+				 * 并将它们标记为不可显示。 */
+//				about.setAlwaysOnTop(false);
+				about.dispose();
+				about.setVisible(false);
+				ison = false;
+				//				about.setVisible(false);
+
+			}
+			else
+			{
+				System.out.print("else switch");
+
+				info = new JLabel();
+				info.setText(verstr);
+				about = new JDialog();
+				
+				about.setTitle("版本");
+				about.setAlwaysOnTop(true);
+//				about.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				about.setVisible(true);
+//				about.setPreferredSize(getPreferredSize());
+				about.setSize(200, 100);
+//				about.getContentPane().add(jButton1);
+				about.getContentPane().add(info);
+				
+				about.setLocationRelativeTo(null);                //让窗体居中显示	
+				
+				ison = true;
+			}
+
+
+		}
+
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
