@@ -153,16 +153,16 @@ public class GuiMain extends JFrame {
 	    
 
 
-		final Object[] columnNames = {"姓名", "性别", "家庭地址",//列名最好用final修饰
-				"电话号码", "生日", "工作", "收入", "婚姻状况","恋爱状况"};
+		final Object[] columnNames = {"索引字段", "内容字段",//列名最好用final修饰
+				};
 		Object[][] rowData = {
-				{"ddd", "男", "江苏南京", "1378313210", "03/24/1985", "学生", "寄生中", "未婚", "没"},
-				{"eee", "女", "江苏南京", "13645181705", "xx/xx/1985", "家教", "未知", "未婚", "好象没"},
-				{"fff", "男", "江苏南京", "13585331486", "12/08/1985", "汽车推销员", "不确定", "未婚", "有"},
-				{"ggg", "女", "江苏南京", "81513779", "xx/xx/1986", "宾馆服务员", "确定但未知", "未婚", "有"},
-				{"hhh", "男", "江苏南京", "13651545936", "xx/xx/1985", "学生", "流放中", "未婚", "无数次分手后没有"}
+				{"ddd", "男"},
+				{"eee", "女"},
+				{"fff", "男"},
+				{"ggg", "女"},
+				{"hhh", "男"},
 		};
-
+		
 
 		JTable friends = new JTable (rowData, columnNames);
 		friends.setPreferredScrollableViewportSize(new Dimension(1000, 10000));//设置表格的大小
@@ -185,16 +185,7 @@ public class GuiMain extends JFrame {
 		friends.setBackground (Color.lightGray);
 
 
-//		JScrollPane pane1 = new JScrollPane (example1);//JTable最好加在JScrollPane上
-//		JScrollPane pane2 = new JScrollPane (example2);
-		JScrollPane pane3 = new JScrollPane (friends);
-
-//		JPanel panel = new JPanel (new GridLayout (0, 1));
-//		panel.setPreferredSize (new Dimension (600,400));
-//		panel.setBackground (Color.black);
-//		panel.add (pane1);
-//		panel.add (pane2);
-//		panel.add (pane3);		
+		JScrollPane pane3 = new JScrollPane (friends);	
 		
         Box hbox1=Box.createHorizontalBox();//创建一个水平箱子
         hbox1.add(label); //在水平箱子上添加一个标签组件，并且创建一个不可见的、20个单位的组件。在这之后再添加一个文本框组件
