@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -24,13 +25,16 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
 import javax.swing.plaf.synth.SynthScrollPaneUI;
 
 public class GuiMain extends JFrame {
@@ -138,6 +142,60 @@ public class GuiMain extends JFrame {
 				"Qtquick", "Unittest"};   
 		combox_dbsel    = new JComboBox<Object>(dbstrlist);
 		selDbButton     = new JButton("选择代码库");
+		
+		//List 没有达到效果
+//		DefaultListModel<String> listModel = new DefaultListModel<String>();
+//	    listModel.addElement("Debbie Scott");
+//	    listModel.addElement("Scott Hommel");
+//	    listModel.addElement("Sharon Zakhour");
+//	    JList<String> list = new JList<String>(listModel);
+//	    list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+	    
+
+
+		final Object[] columnNames = {"姓名", "性别", "家庭地址",//列名最好用final修饰
+				"电话号码", "生日", "工作", "收入", "婚姻状况","恋爱状况"};
+		Object[][] rowData = {
+				{"ddd", "男", "江苏南京", "1378313210", "03/24/1985", "学生", "寄生中", "未婚", "没"},
+				{"eee", "女", "江苏南京", "13645181705", "xx/xx/1985", "家教", "未知", "未婚", "好象没"},
+				{"fff", "男", "江苏南京", "13585331486", "12/08/1985", "汽车推销员", "不确定", "未婚", "有"},
+				{"ggg", "女", "江苏南京", "81513779", "xx/xx/1986", "宾馆服务员", "确定但未知", "未婚", "有"},
+				{"hhh", "男", "江苏南京", "13651545936", "xx/xx/1985", "学生", "流放中", "未婚", "无数次分手后没有"}
+		};
+
+
+		JTable friends = new JTable (rowData, columnNames);
+		friends.setPreferredScrollableViewportSize(new Dimension(1000, 10000));//设置表格的大小
+		friends.setRowHeight (30);//设置每行的高度为20
+		friends.setRowHeight (0, 20);//设置第1行的高度为15
+		friends.setRowMargin (5);//设置相邻两行单元格的距离
+		friends.setRowSelectionAllowed (true);//设置可否被选择.默认为false
+		friends.setSelectionBackground (Color.white);//设置所选择行的背景色
+		friends.setSelectionForeground (Color.red);//设置所选择行的前景色
+		friends.setGridColor (Color.black);//设置网格线的颜色
+		friends.selectAll ();//选择所有行
+		friends.setRowSelectionInterval (0,2);//设置初始的选择行,这里是1到3行都处于选择状态
+		friends.clearSelection ();//取消选择
+		friends.setDragEnabled (false);//不懂这个
+		friends.setShowGrid (false);//是否显示网格线
+		friends.setShowHorizontalLines (false);//是否显示水平的网格线
+		friends.setShowVerticalLines (true);//是否显示垂直的网格线
+		friends.setValueAt ("tt", 0, 0);//设置某个单元格的值,这个值是一个对象
+		friends.doLayout ();
+		friends.setBackground (Color.lightGray);
+
+
+//		JScrollPane pane1 = new JScrollPane (example1);//JTable最好加在JScrollPane上
+//		JScrollPane pane2 = new JScrollPane (example2);
+		JScrollPane pane3 = new JScrollPane (friends);
+
+//		JPanel panel = new JPanel (new GridLayout (0, 1));
+//		panel.setPreferredSize (new Dimension (600,400));
+//		panel.setBackground (Color.black);
+//		panel.add (pane1);
+//		panel.add (pane2);
+//		panel.add (pane3);		
+		
         Box hbox1=Box.createHorizontalBox();//创建一个水平箱子
         hbox1.add(label); //在水平箱子上添加一个标签组件，并且创建一个不可见的、20个单位的组件。在这之后再添加一个文本框组件
         hbox1.add(Box.createHorizontalStrut(5));
@@ -148,7 +206,10 @@ public class GuiMain extends JFrame {
         hbox1.add(checkbox_ag);
         hbox1.add(combox_dbsel);
         hbox1.add(selDbButton);
-           
+        
+        Box lvbox=Box.createVerticalBox();
+        lvbox.add(hbox1);
+        lvbox.add(pane3);
         
 		InDbButton      = new JButton("入库");
 		rightcleanButton   = new JButton("右清空");
@@ -177,14 +238,10 @@ public class GuiMain extends JFrame {
 		
 		saveButton         = new JButton("save");
 		gencodeButton      = new JButton("生成代码库");
-		rview              = new JTextArea(500, 15);
+		rview              = new JTextArea(100, 150);
 		rview.setLineWrap(true); 
 		  
 //		rview.setContentType("text/html");  
-
-//        JTextArea textArea = new JTextArea(500, 15);  
-         
-//        JScrollPane scrollPane = new JScrollPane(textArea);  
 		
 		JScrollPane scrollPane = new JScrollPane(rview);  
 //		scrollPane.setPreferredSize(new Dimension(rview.getWidth(), rview.getHeight()));
@@ -195,7 +252,7 @@ public class GuiMain extends JFrame {
 
         Box hbox2=Box.createHorizontalBox();//创建一个水平箱子
         hbox2.add(saveButton); //在水平箱子上添加一个标签组件，并且创建一个不可见的、20个单位的组件。在这之后再添加一个文本框组件
-//        hbox2.add(Box.createHorizontalStrut(20));
+        hbox2.add(Box.createHorizontalStrut(20));
         hbox2.add(gencodeButton);  
         
         Box rvbox = Box.createVerticalBox();
@@ -206,7 +263,7 @@ public class GuiMain extends JFrame {
 	
         
         Box hbox=Box.createHorizontalBox();//创建一个垂直箱子，这个箱子将两个水平箱子添加到其中，创建一个横向 glue 组件。
-        hbox.add(hbox1);
+        hbox.add(lvbox);
         hbox.add(Box.createHorizontalGlue());
         hbox.add(vbox1);
         hbox.add(Box.createHorizontalGlue());        
@@ -216,47 +273,6 @@ public class GuiMain extends JFrame {
         
         con.add(hbox,BorderLayout.CENTER); // 将垂直箱子添加到BorderLayout布局管理器中的中间位置
         
-//
-//		left1edit          = new JEditorPane();
-//		left2edit          = new JEditorPane();
-//		rightedit          = new JEditorPane();
-//		left1edit.setLayout(new GridLayout(9,4));
-//		left2edit.setLayout(new GridLayout(9,1));
-//		rightedit.setLayout(new GridLayout(9,4));
-//		
-//		
-//		
-//		p.add(label);
-//		p.add(lineEdit_Search);
-//		p.add(cleanButton);
-//		p.add(getClipdButton);
-//		p.add(checkbox_ag);
-//		p.add(combox_dbsel);
-//		p.add(selDbButton);
-//		p.add(InDbButton);
-//		p.add(saveButton);
-//		p.add(gencodeButton);
-//		
-////		pl.add(left1edit);
-////		pc.add(left2edit);
-////		pr.add(rightedit);
-//		
-//		pl.add(left1edit);
-//		pl.add(left2edit);
-//		pl.add(rightedit);
-//			
-//		
-//		content.add("l1", left1edit);
-//		content.add("l2", left2edit);
-//		content.add("r", rightedit);
-//		//将文本框放置在窗体NORTH位置
-//
-//        frame.getContentPane().add(p,BorderLayout.NORTH);  
-////        frame.getContentPane().add(pl,BorderLayout.SOUTH);  
-//        frame.getContentPane().add(content,BorderLayout.SOUTH);  
-////        frame.getContentPane().add(pc,BorderLayout.CENTER);  
-////        frame.getContentPane().add(pr,BorderLayout.EAST);  
-//		
 		
 		//load logo
 		loadlogo(frame);
