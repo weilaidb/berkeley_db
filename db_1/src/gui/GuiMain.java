@@ -26,6 +26,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
@@ -56,7 +57,7 @@ public class GuiMain extends JFrame {
 	JCheckBox  checkbox_ag;
 	JComboBox  combox_dbsel;
 	
-	JTextPane  rview;
+	JTextArea  rview;
 	
 	JEditorPane left1edit;
 	JEditorPane left2edit;
@@ -176,16 +177,19 @@ public class GuiMain extends JFrame {
 		
 		saveButton         = new JButton("save");
 		gencodeButton      = new JButton("Éú³É´úÂë¿â");
-		rview              = new JTextPane();
+		rview              = new JTextArea(500, 15);
+		rview.setLineWrap(true); 
 		  
-		rview.setContentType("text/html");  
+//		rview.setContentType("text/html");  
 
+//        JTextArea textArea = new JTextArea(500, 15);  
+         
+//        JScrollPane scrollPane = new JScrollPane(textArea);  
+		
 		JScrollPane scrollPane = new JScrollPane(rview);  
-		scrollPane.setPreferredSize(new Dimension(rview.getWidth(), rview.getHeight()));
-  
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);  
-  
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);  
+//		scrollPane.setPreferredSize(new Dimension(rview.getWidth(), rview.getHeight()));
+//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);  
+//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);  
         scrollPane.revalidate();
         scrollPane.repaint();
 
