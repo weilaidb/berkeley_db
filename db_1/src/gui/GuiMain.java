@@ -1,11 +1,9 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -17,28 +15,24 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
-import javax.swing.JViewport;
-import javax.swing.ListSelectionModel;
-import javax.swing.plaf.synth.SynthScrollPaneUI;
 
 public class GuiMain extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JFrame frame;
 	JLabel label;
 	JButton lableButton;
@@ -60,7 +54,7 @@ public class GuiMain extends JFrame {
 	JButton closeButton;
 	JTextField  lineEdit_Search;
 	JCheckBox  checkbox_ag;
-	JComboBox  combox_dbsel;
+	JComboBox<Object>  combox_dbsel;
 	
 	JTextArea  rview;
 	
@@ -72,21 +66,8 @@ public class GuiMain extends JFrame {
 	
 	final String version = "v1.0";
 	
-	void loadlogo(Frame f)
-	{
-		try {
-			String src = "/img/logo.png";     //图片路径
-//			String src = "/img/logo48.ico";     //图片路径,不支持ICO文件 
-			Image image=ImageIO.read(f.getClass().getResource(src));
-			//创建图片对象
-			f.setIconImage(image);          //设置图标
-		} catch (IOException e) {
-			e.printStackTrace();
-		}  
-		
-	}
 	
-	@SuppressWarnings("unchecked")
+	
 	void genJGui()
 	{
 		// 方法3：通过分析匿名类名称()  
@@ -98,30 +79,21 @@ public class GuiMain extends JFrame {
 		}.getClassName();  
 		System.out.println(clazzName3);  
 
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
 		
 		String title = "J_AutoCCode";
 		frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container con=frame.getContentPane();//创建一个中间容器
         
-//		FlowLayout  flow = new FlowLayout( FlowLayout.LEFT, 5, 20 );
-		GridLayout  grid = new GridLayout(10,10,1,1);
-		
-		JPanel p=new JPanel(new GridLayout(1,10,1,1));
-//		JPanel pl=new JPanel(new FlowLayout( FlowLayout.LEFT, 5, 20 )); 
-		JPanel pl=new JPanel(new GridLayout(1,10,1,1)); 
-		Container content = new Container(); 
+        Container content = new Container(); 
 		content.setBackground(Color.black); 
 		content.setLayout(new GridLayout(1,10,1,1));
 		
-		JPanel pc=new JPanel(new GridLayout(1,2,1,1)); 
-		JPanel pr=new JPanel(new GridLayout(1,4,1,1)); 
-		
-		  //设置窗体中显示的字体样式
+		//设置窗体中显示的字体样式
 		frame.setFont(new Font("Times",Font.PLAIN, 20));
 	    
 		
@@ -140,12 +112,8 @@ public class GuiMain extends JFrame {
 		lineEdit_Search = new JTextField(15);
 		cleanButton     = new JButton("clean");
 		getClipdButton  = new JButton("getClipd");
-		checkbox_ag     = new JCheckBox("AG",true);
-		String dbstrlist[] = { "Android", "C", "C++", "Debug", "Erlang", "Hadoop",
-				"Java", "JavaScript", "MySql", "Oracle", "Patchs", "Perl", "Postgresql",
-				"Rust", "shell", "Sqlite3", "Swift", "Php", "Python", "Qt", 
-				"Qtquick", "Unittest"};   
-		combox_dbsel    = new JComboBox<Object>(dbstrlist);
+		checkbox_ag     = new JCheckBox("AG",true);  
+		combox_dbsel    = JComboBoxKeyList();
 		selDbButton     = new JButton("选择代码库");
 		
 		//List 没有达到效果
@@ -158,39 +126,8 @@ public class GuiMain extends JFrame {
 	    
 
 
-		final Object[] columnNames = {"索引字段", "内容字段",//列名最好用final修饰
-				};
-		Object[][] rowData = {
-				{"ddd", "男"},
-				{"eee", "女"},
-				{"fff", "男"},
-				{"ggg", "女"},
-				{"hhh", "男"},
-		};
-		
 
-		JTable friends = new JTable (rowData, columnNames);
-		friends.setPreferredScrollableViewportSize(new Dimension(1000, 10000));//设置表格的大小
-		friends.setRowHeight (30);//设置每行的高度为20
-		friends.setRowHeight (0, 20);//设置第1行的高度为15
-		friends.setRowMargin (5);//设置相邻两行单元格的距离
-		friends.setRowSelectionAllowed (true);//设置可否被选择.默认为false
-		friends.setSelectionBackground (Color.white);//设置所选择行的背景色
-		friends.setSelectionForeground (Color.red);//设置所选择行的前景色
-		friends.setGridColor (Color.black);//设置网格线的颜色
-		friends.selectAll ();//选择所有行
-		friends.setRowSelectionInterval (0,2);//设置初始的选择行,这里是1到3行都处于选择状态
-		friends.clearSelection ();//取消选择
-		friends.setDragEnabled (false);//不懂这个
-		friends.setShowGrid (false);//是否显示网格线
-		friends.setShowHorizontalLines (false);//是否显示水平的网格线
-		friends.setShowVerticalLines (true);//是否显示垂直的网格线
-		friends.setValueAt ("tt", 0, 0);//设置某个单元格的值,这个值是一个对象
-		friends.doLayout ();
-		friends.setBackground (Color.lightGray);
-
-
-		JScrollPane pane3 = new JScrollPane (friends);	
+		JScrollPane pane3 = new JScrollPane (test_data());	
 		
         Box hbox1=Box.createHorizontalBox();//创建一个水平箱子
         hbox1.add(label); //在水平箱子上添加一个标签组件，并且创建一个不可见的、20个单位的组件。在这之后再添加一个文本框组件
@@ -422,5 +359,112 @@ public class GuiMain extends JFrame {
 		gui.genJGui();
 	}
 
+	
+	
+	
+	JComboBox<Object> JComboBoxKeyList()
+	{
+		String dbstrlist[] = { "Android", 
+	               "C", 
+	               "C++", 
+	               "Debug", 
+	               "Erlang", 
+	               "Hadoop",
+	               "Java", 
+	               "JavaScript", 
+	               "MySql", 
+	               "Oracle", 
+	               "Patchs", 
+	               "Perl", 
+	               "Postgresql",
+	               "Rust", 
+	               "shell", 
+	               "Sqlite3", 
+	               "Swift", 
+	               "Php", 
+	               "Python", 
+	               "Qt", 
+	               "Qtquick", "Unittest"};   
+		return new JComboBox<Object>(dbstrlist);
+	}
+	
+
+	void loadlogo(Frame f)
+	{
+		try {
+			String src = "/img/logo.png";     //图片路径,不支持ICO文件     
+			Image image=ImageIO.read(f.getClass().getResource(src));
+			//创建图片对象
+			f.setIconImage(image);          //设置图标
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+		
+	}
+	
+	JTable test_data()
+	{
+
+		final Object[] columnNames = {"索引字段", "内容字段",//列名最好用final修饰
+				};
+		Object[][] rowData = {
+				{"ddd", "男"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"fff", "男"},
+				{"ggg", "女"},
+				{"hhh", "男"},
+				{"ddd", "男"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"fff", "男"},
+				{"ggg", "女"},
+				{"hhh", "男"},
+				{"ddd", "男"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"fff", "男"},
+				{"ggg", "女"},
+				{"hhh", "男"},
+				{"ddd", "男"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"eee", "女"},
+				{"fff", "男"},
+				{"ggg", "女"},
+				{"hhh", "男"},
+		};
+		
+
+		JTable friends = new JTable (rowData, columnNames);
+		friends.setPreferredScrollableViewportSize(new Dimension(1000, 10000));//设置表格的大小
+		friends.setRowHeight (30);//设置每行的高度为20
+		friends.setRowHeight (0, 20);//设置第1行的高度为15
+		friends.setRowMargin (5);//设置相邻两行单元格的距离
+		friends.setRowSelectionAllowed (true);//设置可否被选择.默认为false
+		friends.setSelectionBackground (Color.white);//设置所选择行的背景色
+		friends.setSelectionForeground (Color.red);//设置所选择行的前景色
+		friends.setGridColor (Color.black);//设置网格线的颜色
+		friends.selectAll ();//选择所有行
+		friends.setRowSelectionInterval (0,2);//设置初始的选择行,这里是1到3行都处于选择状态
+		friends.clearSelection ();//取消选择
+		friends.setDragEnabled (false);//不懂这个
+		friends.setShowGrid (false);//是否显示网格线
+		friends.setShowHorizontalLines (false);//是否显示水平的网格线
+		friends.setShowVerticalLines (true);//是否显示垂直的网格线
+		friends.setValueAt ("tt", 0, 0);//设置某个单元格的值,这个值是一个对象
+		friends.doLayout ();
+		friends.setBackground (Color.lightGray);
+		
+		return friends;
+	}
+	
 	
 }
