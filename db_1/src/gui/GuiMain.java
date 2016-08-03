@@ -79,10 +79,6 @@ public class GuiMain extends JFrame {
 		}.getClassName();  
 		System.out.println(clazzName3);  
 
-//		System.out.println();
-//		System.out.println();
-//		System.out.println();
-//		System.out.println();
 		
 		String title = "J_AutoCCode";
 		frame = new JFrame(title);
@@ -96,10 +92,6 @@ public class GuiMain extends JFrame {
 		//设置窗体中显示的字体样式
 		frame.setFont(new Font("Times",Font.PLAIN, 20));
 	    
-		
-		
-//		frame.setLayout(flow);
-//		frame.setLayout(grid);
 		
 		lableButton = new JButton("Change Lable");
 		lableButton.addActionListener(new LabelListener());
@@ -115,15 +107,6 @@ public class GuiMain extends JFrame {
 		checkbox_ag     = new JCheckBox("AG",true);  
 		combox_dbsel    = JComboBoxKeyList();
 		selDbButton     = new JButton("选择代码库");
-		
-		//List 没有达到效果
-//		DefaultListModel<String> listModel = new DefaultListModel<String>();
-//	    listModel.addElement("Debbie Scott");
-//	    listModel.addElement("Scott Hommel");
-//	    listModel.addElement("Sharon Zakhour");
-//	    JList<String> list = new JList<String>(listModel);
-//	    list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-	    
 
 
 
