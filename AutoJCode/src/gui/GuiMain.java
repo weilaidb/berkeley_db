@@ -67,6 +67,12 @@ public class GuiMain extends JFrame {
 	final String version = "v1.0";
 	
 	
+	//===========inter use begin===============
+	String currentdb;
+	
+	//===========inter use end  ===============
+	
+	
 	
 	void genJGui()
 	{
@@ -106,7 +112,7 @@ public class GuiMain extends JFrame {
 		getClipdButton  = new JButton("getClipd");
 		checkbox_ag     = new JCheckBox("AG",true);  
 		combox_dbsel    = JComboBoxKeyList();
-		selDbButton     = new JButton("选择代码库");
+//		selDbButton     = new JButton("选择代码库");
 
 
 
@@ -121,7 +127,14 @@ public class GuiMain extends JFrame {
         hbox1.add(getClipdButton);
         hbox1.add(checkbox_ag);
         hbox1.add(combox_dbsel);
-        hbox1.add(selDbButton);
+//        hbox1.add(selDbButton);
+        
+        
+        //添加listener
+        combox_dbsel.addActionListener(new dbselectComboxListener());
+        cleanButton.addActionListener(new cleanBtnListener());
+        lineEdit_Search.addActionListener(new lineEdit_Search_Listener());
+//        lineEdit_Search.addKeyListener();
         
         Box lvbox=Box.createVerticalBox();
         lvbox.add(hbox1);
@@ -257,9 +270,58 @@ public class GuiMain extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
+			System.out.println("我要关了");
 			System.exit(0);
 		}
 
+	}
+	
+//	//搜索行内容
+//	public class lineEdit_Search_KeyListener implements ActionListener {
+//		
+//		@Override
+//		public void actionPerformed(ActionEvent arg0) {
+//			// TODO Auto-generated method stub
+////			lineEdit_Search.setText("");
+//			System.out.println("搜索关键字:" + lineEdit_Search.getText());
+//			
+//		}
+//		
+//	}
+	
+	//搜索行内容
+	public class lineEdit_Search_Listener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+//			lineEdit_Search.setText("");
+			System.out.println("搜索关键字:" + lineEdit_Search.getText());
+			
+		}
+		
+	}
+	
+	//清空按钮
+	public class cleanBtnListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			lineEdit_Search.setText("");
+		}
+		
+	}
+	//选择数据库
+	public class dbselectComboxListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			currentdb = combox_dbsel.getSelectedItem().toString();
+			System.out.println("select db:" + currentdb);
+		}
+		
 	}
 	
 	public class aboutBtnClickListener implements ActionListener {
@@ -397,32 +459,6 @@ public class GuiMain extends JFrame {
 				{"eee", "女"},
 				{"eee", "女"},
 				{"fff", "男"},
-				{"ggg", "女"},
-				{"hhh", "男"},
-				{"ddd", "男"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"fff", "男"},
-				{"ggg", "女"},
-				{"hhh", "男"},
-				{"ddd", "男"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"fff", "男"},
-				{"ggg", "女"},
-				{"hhh", "男"},
-				{"ddd", "男"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"eee", "女"},
-				{"fff", "男"},
-				{"ggg", "女"},
-				{"hhh", "男"},
 		};
 		
 
