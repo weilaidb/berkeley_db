@@ -29,10 +29,183 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class GuiMain extends JFrame {
+	public class aboutBtnClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+//			JButton jButton1=new JButton("OK");
+//			jButton1.addActionListener(this);
+//			JTextArea info = new JTextArea();
+			String verstr = "自动生成代码 \n "
+					+ "by 小魏莱 \n" 
+					+ version; 
+			
+			JLabel info;
+			
+
+//			info.setText(verstr);
+			
+			
+			
+			
+			//创建一个按钮对象,该对象被添加到对话框中
+			if(ison){
+				System.out.print("equals ok");
+				// 以下语句等价于jDialog1.setVisible(false);
+
+				/* public void dispose()
+
+				 * 释放由此 Window、其子组件及其拥有的所有子组件所使用的所有本机屏幕资源。
+
+				 * 即这些 Component 的资源将被破坏，它们使用的所有内存都将返回到操作系统，
+
+				 * 并将它们标记为不可显示。 */
+//				about.setAlwaysOnTop(false);
+				about.dispose();
+				about.setVisible(false);
+				ison = false;
+				//				about.setVisible(false);
+
+			}
+			else
+			{
+				System.out.print("else switch");
+
+				info = new JLabel();
+				info.setText(verstr);
+				about = new JDialog();
+				
+				about.setTitle("版本");
+				about.setAlwaysOnTop(true);
+//				about.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				about.setVisible(true);
+//				about.setPreferredSize(getPreferredSize());
+				about.setSize(200, 100);
+//				about.getContentPane().add(jButton1);
+				about.getContentPane().add(info);
+				
+				about.setLocationRelativeTo(null);                //让窗体居中显示	
+				
+				ison = true;
+			}
+
+
+		}
+
+	}
+	//清空按钮
+	public class cleanBtnListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			lineEdit_Search.setText("");
+		}
+		
+	}
+	public class CloseBtnClickedListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			System.out.println("我要关了");
+			System.exit(0);
+		}
+
+	}
+	public class ColorListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			// 方法3：通过分析匿名类名称()  
+			String clazzName3 = new Object() {  
+				public String getClassName() {  
+					String clazzName = this.getClass().getName();  
+					return clazzName.substring(0, clazzName.lastIndexOf('$'));  
+				}  
+			}.getClassName();  
+			System.out.println(clazzName3);  
+//			lableButton.setText("color clicked!!");
+			label.setText("color clicked!!");
+		}
+
+	}
+	//选择数据库
+	public class dbselectComboxListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			currentdb = combox_dbsel.getSelectedItem().toString();
+			System.out.println("select db:" + currentdb);
+		}
+		
+	}
+	public class LabelListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			// 方法3：通过分析匿名类名称()  
+			String clazzName3 = new Object() {  
+				public String getClassName() {  
+					String clazzName = this.getClass().getName();  
+					return clazzName.substring(0, clazzName.lastIndexOf('$'));  
+				}  
+			}.getClassName();  
+			System.out.println(clazzName3);  
+			
+//			lableButton.setText("lable clicked!!");
+			label.setText("lable clicked!!");
+
+		}
+
+	}
+	//搜索行内容
+	public class lineEdit_Search_Listener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+//			lineEdit_Search.setText("");
+			System.out.println("搜索关键字:" + lineEdit_Search.getText());
+			
+		}
+		
+	}
+	
+	//搜索行内容
+	public class rightcleanButton_Listener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+//			lineEdit_Search.setText("");
+			rview.setText("");
+//			System.out.println("搜索关键字:" + lineEdit_Search.getText());
+			
+		}
+		
+	}
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		System.out.println("==================================");
+		System.out.println();
+		System.out.println("gui main begin:");
+//		genGui();
+//		genJGui();
+		GuiMain gui = new GuiMain();
+		gui.genJGui();
+	}
 	JFrame frame;
 	JLabel label;
 	JButton lableButton;
@@ -47,33 +220,57 @@ public class GuiMain extends JFrame {
 	JButton pasteButton;
 	JButton autoindbButton;
 	JButton modifyButton;
+	
 	JButton deleteButton;
+	
 	JButton setupButton;
 	JButton toolButton;
 	JButton aboutButton;
 	JButton closeButton;
 	JTextField  lineEdit_Search;
+	
 	JCheckBox  checkbox_ag;
+	
+	
 	JComboBox<Object>  combox_dbsel;
-	
-	JTextArea  rview;
-	
-	JEditorPane left1edit;
-	JEditorPane left2edit;
-	JEditorPane rightedit;
-	JDialog about = null;
-	boolean ison = false;
-	
-	final String version = "v1.0";
-	
-	
-	//===========inter use begin===============
-	String currentdb;
 	
 	//===========inter use end  ===============
 	
 	
 	
+	JTextArea  rview;
+	
+
+
+	JEditorPane left1edit;
+
+	JEditorPane left2edit;
+
+	JEditorPane rightedit;
+
+	
+//	//搜索行内容
+//	public class lineEdit_Search_KeyListener implements ActionListener {
+//		
+//		@Override
+//		public void actionPerformed(ActionEvent arg0) {
+//			// TODO Auto-generated method stub
+////			lineEdit_Search.setText("");
+//			System.out.println("搜索关键字:" + lineEdit_Search.getText());
+//			
+//		}
+//		
+//	}
+	
+	JDialog about = null;
+	
+	boolean ison = false;
+	final String version = "v1.0";
+	
+	//===========inter use begin===============
+	String currentdb;
+	
+
 	void genJGui()
 	{
 		// 方法3：通过分析匿名类名称()  
@@ -86,7 +283,7 @@ public class GuiMain extends JFrame {
 		System.out.println(clazzName3);  
 
 		
-		String title = "J_AutoCCode";
+		String title = "JutoCCode";
 		frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container con=frame.getContentPane();//创建一个中间容器
@@ -153,6 +350,7 @@ public class GuiMain extends JFrame {
 		aboutButton.addActionListener(new aboutBtnClickListener());
 		closeButton        = new JButton("close");
 		closeButton.addActionListener(new CloseBtnClickedListener());
+		rightcleanButton.addActionListener(new rightcleanButton_Listener());
 		
         Box vbox1=Box.createVerticalBox();
         vbox1.add(InDbButton);
@@ -221,187 +419,6 @@ public class GuiMain extends JFrame {
 			
 		
 		
-	}
-	
-
-
-	public class LabelListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			// 方法3：通过分析匿名类名称()  
-			String clazzName3 = new Object() {  
-				public String getClassName() {  
-					String clazzName = this.getClass().getName();  
-					return clazzName.substring(0, clazzName.lastIndexOf('$'));  
-				}  
-			}.getClassName();  
-			System.out.println(clazzName3);  
-			
-//			lableButton.setText("lable clicked!!");
-			label.setText("lable clicked!!");
-
-		}
-
-	}
-
-	public class ColorListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			// 方法3：通过分析匿名类名称()  
-			String clazzName3 = new Object() {  
-				public String getClassName() {  
-					String clazzName = this.getClass().getName();  
-					return clazzName.substring(0, clazzName.lastIndexOf('$'));  
-				}  
-			}.getClassName();  
-			System.out.println(clazzName3);  
-//			lableButton.setText("color clicked!!");
-			label.setText("color clicked!!");
-		}
-
-	}
-
-	public class CloseBtnClickedListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			System.out.println("我要关了");
-			System.exit(0);
-		}
-
-	}
-	
-//	//搜索行内容
-//	public class lineEdit_Search_KeyListener implements ActionListener {
-//		
-//		@Override
-//		public void actionPerformed(ActionEvent arg0) {
-//			// TODO Auto-generated method stub
-////			lineEdit_Search.setText("");
-//			System.out.println("搜索关键字:" + lineEdit_Search.getText());
-//			
-//		}
-//		
-//	}
-	
-	//搜索行内容
-	public class lineEdit_Search_Listener implements ActionListener {
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-//			lineEdit_Search.setText("");
-			System.out.println("搜索关键字:" + lineEdit_Search.getText());
-			
-		}
-		
-	}
-	
-	//清空按钮
-	public class cleanBtnListener implements ActionListener {
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			lineEdit_Search.setText("");
-		}
-		
-	}
-	//选择数据库
-	public class dbselectComboxListener implements ActionListener {
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			currentdb = combox_dbsel.getSelectedItem().toString();
-			System.out.println("select db:" + currentdb);
-		}
-		
-	}
-	
-	public class aboutBtnClickListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-//			JButton jButton1=new JButton("OK");
-//			jButton1.addActionListener(this);
-//			JTextArea info = new JTextArea();
-			String verstr = "自动生成代码 \n "
-					+ "by 小魏莱 \n" 
-					+ version; 
-			
-			JLabel info;
-			
-
-//			info.setText(verstr);
-			
-			
-			
-			
-			//创建一个按钮对象,该对象被添加到对话框中
-			if(ison){
-				System.out.print("equals ok");
-				// 以下语句等价于jDialog1.setVisible(false);
-
-				/* public void dispose()
-
-				 * 释放由此 Window、其子组件及其拥有的所有子组件所使用的所有本机屏幕资源。
-
-				 * 即这些 Component 的资源将被破坏，它们使用的所有内存都将返回到操作系统，
-
-				 * 并将它们标记为不可显示。 */
-//				about.setAlwaysOnTop(false);
-				about.dispose();
-				about.setVisible(false);
-				ison = false;
-				//				about.setVisible(false);
-
-			}
-			else
-			{
-				System.out.print("else switch");
-
-				info = new JLabel();
-				info.setText(verstr);
-				about = new JDialog();
-				
-				about.setTitle("版本");
-				about.setAlwaysOnTop(true);
-//				about.setDefaultCloseOperation(EXIT_ON_CLOSE);
-				about.setVisible(true);
-//				about.setPreferredSize(getPreferredSize());
-				about.setSize(200, 100);
-//				about.getContentPane().add(jButton1);
-				about.getContentPane().add(info);
-				
-				about.setLocationRelativeTo(null);                //让窗体居中显示	
-				
-				ison = true;
-			}
-
-
-		}
-
-	}
-	
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		System.out.println("==================================");
-		System.out.println();
-		System.out.println("gui main begin:");
-//		genGui();
-//		genJGui();
-		GuiMain gui = new GuiMain();
-		gui.genJGui();
 	}
 
 	
