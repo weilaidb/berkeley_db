@@ -28,7 +28,119 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import java.io.IOException;  
+import java.awt.Toolkit;  
+import java.awt.datatransfer.Clipboard;  
+import java.awt.datatransfer.DataFlavor;  
+import java.awt.datatransfer.StringSelection;  
+import java.awt.datatransfer.Transferable;  
+import java.awt.datatransfer.UnsupportedFlavorException;  
+import java.awt.Image;  
+
+
+import com.sleepycat.*;
+
+
 public class GuiMain extends JFrame {
+	
+	
+//	设置系统剪切板内容[内容为文本]
+	public static void setSystemClipboard(String refContent){   
+		//设置为static是为了直接使用，不用new一个该类的实例即可直接使用,即定义的: 类名.方法名  
+		String vc = refContent.trim();  
+		StringSelection ss = new StringSelection(vc);  
+
+		Clipboard sysClb=null;  
+		sysClb = Toolkit.getDefaultToolkit().getSystemClipboard();  
+		sysClb.setContents(ss,null);  
+
+		//Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);  //跟上面三行代码效果相同  
+	}  
+	
+	//	获取系统剪切板内容[剪切板中内容为文本型]
+	//			[java] view plain copy
+	public static String getSystemClipboard(){//获取系统剪切板的文本内容[如果系统剪切板复制的内容是文本]  
+		Clipboard sysClb=null;  
+		sysClb = Toolkit.getDefaultToolkit().getSystemClipboard();  
+		Transferable t = sysClb.getContents(null);  
+		//Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);  //跟上面三行代码一样  
+		try {   
+			if (null != t && t.isDataFlavorSupported(DataFlavor.stringFlavor)) {   
+				String text = (String)t.getTransferData(DataFlavor.stringFlavor);   
+				return text;   
+			}   
+		} catch (UnsupportedFlavorException e) {  
+			//System.out.println("Error tip: "+e.getMessage());  
+		} catch (IOException e) {   
+		}   //System.out.println("Error tip: "+e.getMessage());  
+		return null;   
+	}  
+	
+	
+	
+//	设置系统剪切板内容[内容为图片型]
+//			[java] view plain copy
+	public static void setImageClipboard(Image image) {   
+		ImageSelection imgSel = new ImageSelection(image);   
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);   
+	}   
+
+	public static class ImageSelection implements Transferable {   
+		private Image image;   
+		public ImageSelection(Image image) {this.image = image;}   
+
+		public DataFlavor[] getTransferDataFlavors() {   
+			return new DataFlavor[]{DataFlavor.imageFlavor};   
+		}   
+
+		public boolean isDataFlavorSupported(DataFlavor flavor) {   
+			return DataFlavor.imageFlavor.equals(flavor);   
+		}  
+
+		public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {   
+			if (!DataFlavor.imageFlavor.equals(flavor)) {throw new UnsupportedFlavorException(flavor);}   
+			return image;   
+		}  
+	}  
+	
+	
+
+	//	获取系统剪切板内容[剪切板中内容为图片型]
+	//			[java] view plain copy
+	public static Image getImageClipboard() {   
+		Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);   
+		try {   
+			if (null  != t && t.isDataFlavorSupported(DataFlavor.imageFlavor)) {   
+				Image image = (Image)t.getTransferData(DataFlavor.imageFlavor);   
+				return image;   
+			}   
+		} catch (UnsupportedFlavorException e) {   
+			//System.out.println("Error tip: "+e.getMessage());  
+		} catch (IOException e) {   
+			//System.out.println("Error tip: "+e.getMessage());  
+		}   
+		return null;   
+	}  
+
+	
+//	6,使用方式
+//	[java] view plain copy
+//	类名.setSystemClipboard("这里是新设置的剪切板的内容");  //给剪切板设置文本型内容   
+//	  
+//	String clbContent = 类名.getSystemClipboard();  //获取剪切板的文本型内容  
+//	  
+//	Image img = new Image("xpic.jpg")  
+//	类名.setImageClipboard(img);  //给剪切板设置图片型内容   
+//	Image img2 = 类名.getImageClipboard(); //获取剪切板的图片型内容  
+//	
+	
+	
+	
+	
+	
+	
+	
+	
 	public class aboutBtnClickListener implements ActionListener {
 
 		@Override
@@ -171,7 +283,9 @@ public class GuiMain extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 //			lineEdit_Search.setText("");
+//			System.out.println("搜索关键字:" + lineEdit_Search.getText());
 			System.out.println("搜索关键字:" + lineEdit_Search.getText());
+			rview.setText(lineEdit_Search.getText());
 			
 		}
 		
@@ -351,6 +465,7 @@ public class GuiMain extends JFrame {
 		closeButton        = new JButton("close");
 		closeButton.addActionListener(new CloseBtnClickedListener());
 		rightcleanButton.addActionListener(new rightcleanButton_Listener());
+		getClipdButton.addActionListener(new getClipdButtonListener());
 		
         Box vbox1=Box.createVerticalBox();
         vbox1.add(InDbButton);
@@ -371,7 +486,8 @@ public class GuiMain extends JFrame {
 		rview              = new JTextArea(100, 150);
 		rview.setLineWrap(true); 
 		  
-//		rview.setContentType("text/html");  
+//		rview.setContentType("text/html"); 
+		rview.setLineWrap(true);
 		
 		JScrollPane scrollPane = new JScrollPane(rview);  
 //		scrollPane.setPreferredSize(new Dimension(rview.getWidth(), rview.getHeight()));
@@ -416,8 +532,6 @@ public class GuiMain extends JFrame {
 		frame.setVisible(true);
 		
 		setLocationRelativeTo(null);               //让窗体居中显示
-			
-		
 		
 	}
 
@@ -491,16 +605,33 @@ public class GuiMain extends JFrame {
 		friends.selectAll ();//选择所有行
 		friends.setRowSelectionInterval (0,2);//设置初始的选择行,这里是1到3行都处于选择状态
 		friends.clearSelection ();//取消选择
-		friends.setDragEnabled (false);//不懂这个
+		friends.setDragEnabled (true);//不懂这个
 		friends.setShowGrid (false);//是否显示网格线
 		friends.setShowHorizontalLines (false);//是否显示水平的网格线
 		friends.setShowVerticalLines (true);//是否显示垂直的网格线
-		friends.setValueAt ("tt", 0, 0);//设置某个单元格的值,这个值是一个对象
+//		friends.setValueAt ("tt", 0, 0);//设置某个单元格的值,这个值是一个对象
 		friends.doLayout ();
 		friends.setBackground (Color.lightGray);
 		
+		
+//		friends.addColumnSelectionInterval(2, 2);
+//		friends.addComponentListener(l);
+		
+		
 		return friends;
 	}
-	
+
+	//剪切板内容
+	public class getClipdButtonListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			String clbContent = getSystemClipboard();
+			lineEdit_Search.setText(clbContent);
+		}
+		
+	}
+
 	
 }
